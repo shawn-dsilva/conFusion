@@ -151,15 +151,15 @@ dishRouter.route('/:dishId')
             .catch((err) => next(err));
         });
 
-dishRouter.route('/:dishId/comments/:commendId')
+dishRouter.route('/:dishId/comments/:commentId')
     .get((req, res, next) => { 
         Dishes.findById(req.params.dishId)
         .populate('comments.author')        
         .then((dish) => {
-            if (dish != null && dish.comments.id(req.params.commendId != null)) {
+            if (dish != null && dish.comments.id(req.params.commentId != null)) {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.json(dish.comments.id(req.params.commendId)); //sends data back in json format
+                res.json(dish.comments.id(req.params.commentId)); //sends data back in json format
             }
             else if (dish == null) {
                 err = new Error('Dish ' + req.params.dishId + ' not found ');
@@ -183,23 +183,23 @@ dishRouter.route('/:dishId/comments/:commendId')
         Dishes.findById(req.params.dishId)
         .then((dish) => {
             reqId = req.user._id;
-            authorId = dish.comments.id(req.params.commendId).author;
+            authorId = dish.comments.id(req.params.commentId).author;
             console.log(reqId);
             console.log(authorId);
             if(reqId.equals(authorId)) {
-                if (dish != null && dish.comments.id(req.params.commendId) != null) {
+                if (dish != null && dish.comments.id(req.params.commentId) != null) {
                    
                         if( req.body.rating) {
-                            dish.comments.id(req.params.commendId).rating = req.body.rating;
+                            dish.comments.id(req.params.commentId).rating = req.body.rating;
                         }
                         if( req.body.comment) {
-                            dish.comments.id(req.params.commendId).comment = req.body.comment;                    
+                            dish.comments.id(req.params.commentId).comment = req.body.comment;                    
                         }
                         dish.save()
                         .then((dish) => {
                             res.statusCode = 200;
                             res.setHeader('Content-Type', 'application/json');
-                            res.json(dish.comments.id(req.params.commendId));
+                            res.json(dish.comments.id(req.params.commentId));
                         }, (err) => next(err));
                     }
                     
@@ -226,10 +226,10 @@ dishRouter.route('/:dishId/comments/:commendId')
         Dishes.findById(req.params.dishId)
         .then((dish) => { 
             reqId = req.user._id;
-            authorId = dish.comments.id(req.params.commendId).author;
+            authorId = dish.comments.id(req.params.commentId).author;
             if (reqId.equals(authorId)) {
-                if (dish != null && dish.comments.id(req.params.commendId) != null ) {
-                    dish.comments.id(dish.comments.id(req.params.commendId)).remove();
+                if (dish != null && dish.comments.id(req.params.commentId) != null ) {
+                    dish.comments.id(dish.comments.id(req.params.commentId)).remove();
                     dish.save()
                     .then((dish) => {
                         res.statusCode = 200;
