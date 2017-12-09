@@ -225,21 +225,30 @@ dishRouter.route('/:dishId/comments/:commendId')
     .delete(authenticate.verifyUser, (req, res, next) => {
         Dishes.findById(req.params.dishId)
         .then((dish) => { 
-            if (dish != null && dish.comments.id(req.params.commendId != null) ) {
-                dish.comments.id(dish.comments.id(req.params.commentId)).remove();
-                dish.save()
-                .then((dish) => {
-                    res.statusCode = 200;
-                    res.setHeader('Content-Type', 'application/json');
-                    res.json(dish); //sends data back in json format                    
-                }, (err) => next(err));
-            }
+            reqId = req.user._id;
+            authorId = dish.comments.id(req.params.commendId).author;
+            if (reqId.equals(authorId)) {
+                if (dish != null && dish.comments.id(req.params.commendId) != null ) {
+                    dish.comments.id(dish.comments.id(req.params.commendId)).remove();
+                    dish.save()
+                    .then((dish) => {
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'application/json');
+                        res.json(dish); //sends data back in json format                    
+                    }, (err) => next(err));
+                }
+                else {
+                    err = new Error('Dish ' + req.params.dishId + ' not found ');
+                    err.status = 404;
+                    return next(err);//returns to app.js main error handler
+                    }
+        }
         else {
-            err = new Error('Dish ' + req.params.dishId + ' not found ');
-            err.status = 404;
-            return next(err);//returns to app.js main error handler
-            }
-        }, (err) => next(err))
+            err = new Error("You cannot delete another user's comment ");
+            err.status =403;
+            next(err);
+        }
+    },(err) => next(err))
         .catch((err) => next(err));
     });
     
