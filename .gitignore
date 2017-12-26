@@ -3,3 +3,4 @@ node_modules
 sessions
 .eslintrc.json
 fboauthstuff.txt
+public/images

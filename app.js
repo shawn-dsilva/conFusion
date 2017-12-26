@@ -16,6 +16,7 @@ var dishRouter = require('./routes/dishRouter');
 var leaderRouter = require('./routes/leaderRouter');
 var promotionRouter = require('./routes/promotionRouter');
 var uploadRouter = require('./routes/uploadRouter');
+var favoritesRouter = require('./routes/favoritesRouter');
 
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
@@ -70,6 +71,7 @@ app.use('/users', users);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/dishes', dishRouter);
+app.use('/favorites', favoritesRouter);
 app.use('/leader', leaderRouter);
 app.use('/promotion', promotionRouter);
 app.use('/imageUpload', uploadRouter);
