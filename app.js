@@ -16,7 +16,10 @@ var dishRouter = require('./routes/dishRouter');
 var leaderRouter = require('./routes/leaderRouter');
 var promotionRouter = require('./routes/promotionRouter');
 var uploadRouter = require('./routes/uploadRouter');
+<<<<<<< HEAD
 var favoritesRouter = require('./routes/favoritesRouter');
+=======
+>>>>>>> 93b3cad6ef776d7421f8405c885b4c22304fd186
 
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
