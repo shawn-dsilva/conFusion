@@ -25,19 +25,10 @@ favoritesRouter.route('/')
     .post(cors.corsWithOptions,authenticate.verifyUser, (req, res, next) => {
         Favorites.findOne({user: req.user._id})
             .then((favorite) => {
-                console.log("favorite is : ");
-                console.log(favorite);
-                console.log(typeof(favorite));
                 if (favorite != null) {
-                    //favorite.user = req.user._id;
-                    //console.log(Favorites.schema.paths);
-                    console.log("favorite.dishes before PUSH ")
-                    console.log(favorite.dishes);
                     for(var i = 0; i < req.body.length; i++){
                         favorite.dishes.push(req.body[i]._id);
                     }
-                    console.log("AFTER PUSH OUTPUT FOLLOWS \n");
-                    console.log(favorite);
                     favorite.save()
                     .then((favorite) => {
                         res.statusCode = 200;
@@ -53,10 +44,9 @@ favoritesRouter.route('/')
                         }
                         favorite.save()
                         .then((favorite) => { 
-                        console.log(favorite);
-                             res.statusCode = 200;
-                             res.setHeader('Content-Type', 'application/json');
-                             res.json(favorite);
+                            res.statusCode = 200;
+                            res.setHeader('Content-Type', 'application/json');
+                            res.json(favorite);
                             },(err) => next(err))              
                     }, (err) => next(err))    
                 }
