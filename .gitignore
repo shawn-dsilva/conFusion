@@ -4,3 +4,4 @@ sessions
 .eslintrc.json
 fboauthstuff.txt
 public/images
+npm-debug.log

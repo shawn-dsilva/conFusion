@@ -30,12 +30,7 @@ dishRouter.route('/')
                 res.setHeader('Content-Type', 'application/json');
                 res.json(dish);
             }, (err) => next(err))
-<<<<<<< HEAD
             .catch((err) => next(err));          
-=======
-            .catch((err) => next(err)).options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
-            
->>>>>>> 93b3cad6ef776d7421f8405c885b4c22304fd186
 
     })
     .put(cors.corsWithOptions,(req, res, next) => {

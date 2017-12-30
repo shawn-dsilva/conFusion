@@ -20,7 +20,7 @@ var favoriteSchema = new Schema({
         ref: 'User'
     },
     dishes:[{ type: Schema.Types.ObjectId,
-                ref: 'Dishes'}]
+                ref: 'Dish'}]
 },{
     usePushEach : true
 });

@@ -12,13 +12,14 @@ favoritesRouter.use(bodyParser.json());
 
 favoritesRouter.route('/')
 .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
-.get(cors.cors,(req, res, next) => {
-        Favorites.find({user : req.user})
-            .populate('favDishes.dish')
-            .then((favorites) => {
+.get(cors.cors, authenticate.verifyUser, (req, res, next) => {
+        Favorites.findOne({user: req.user._id})
+            .populate('user').populate('dishes')
+            .then((favorite) => {
+                console.log(favorite);
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.json(favorites); //sends data back in json format
+                res.json(favorite); //sends data back in json format
             }, (err) => next(err))
             .catch((err) => next(err));
     })
