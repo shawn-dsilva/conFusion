@@ -28,7 +28,12 @@ favoritesRouter.route('/')
             .then((favorite) => {
                 if (favorite != null) {
                     for(var i = 0; i < req.body.length; i++){
-                        favorite.dishes.push(req.body[i]._id);
+                        if(favorite.dishes.indexOf(req.body[i]._id) === -1) {
+                            favorite.dishes.push(req.body[i]._id);
+                        }
+                        else {
+                            console.log("this item already exists");
+                        }
                     }
                     favorite.save()
                     .then((favorite) => {
