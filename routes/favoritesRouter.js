@@ -148,10 +148,10 @@ favoritesRouter.route('/:dishId')
                     favorites.dishes.splice(index,1);
                     favorites.save()
                     .then((favorites) => { 
-                        Favorites.findById(favorite._id)
+                        Favorites.findById(favorites._id)
                         .populate('user')
                         .populate('dishes')
-                        then((favorite) => {
+                        .then((favorites) => {
                             res.statusCode = 200;
                             res.setHeader('Content-Type', 'application/json');
                             res.json(favorites);
